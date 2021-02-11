@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import CheckTableCell from './CheckTableCell';
 import ActionButton from './ActionButton';
+import { toDollars } from '../helpers';
 
 function CheckTableRow({
   info: { id, name, address, amount },
@@ -9,7 +10,6 @@ function CheckTableRow({
 }) {
   const [editing, setEditing] = useState(false);
   const [newAddress, setNewAddress] = useState(address);
-  const dollarAmount = `$${amount.toFixed(2)}`;
 
   return (
     <tr>
@@ -18,6 +18,7 @@ function CheckTableRow({
         {editing ? (
           <input
             type="text"
+            aria-label={`${name} address`}
             value={newAddress}
             onChange={(e) => setNewAddress(e.target.value)}
           />
@@ -25,12 +26,13 @@ function CheckTableRow({
           address
         )}
       </CheckTableCell>
-      <CheckTableCell>{dollarAmount}</CheckTableCell>
+      <CheckTableCell>{toDollars(amount)}</CheckTableCell>
       <CheckTableCell small={true}>
         {editing ? (
           <>
             <ActionButton
               title={'Save'}
+              label={`save ${name}`}
               action={() => {
                 updateNonprofit(id, 'address', newAddress);
                 setEditing(false);
@@ -38,6 +40,7 @@ function CheckTableRow({
             />
             <ActionButton
               title={'Cancel'}
+              label={`cancel ${name}`}
               action={() => {
                 setNewAddress(address);
                 setEditing(false);
@@ -45,14 +48,21 @@ function CheckTableRow({
             />
           </>
         ) : (
-          <ActionButton title={'Edit'} action={() => setEditing(true)} />
+          <ActionButton
+            title={'Edit'}
+            label={`edit ${name}`}
+            action={() => setEditing(true)}
+          />
         )}
       </CheckTableCell>
       <CheckTableCell small={true}>
         <ActionButton
           title={'Send'}
+          label={`send ${name}`}
           action={() => {
-            const msg = `Would you like to send a check to ${name} for ${dollarAmount}?`;
+            const msg = `Would you like to send a check to ${name} for ${toDollars(
+              amount
+            )}?`;
             const confirmed = confirm(msg);
             if (confirmed) updateNonprofit(id, 'amount', 0);
           }}
