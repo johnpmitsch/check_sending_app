@@ -35,3 +35,4 @@ If dealing with an API, the send workflow would look more like this:
 - Do we want a confirmation dialog?
 - Should there be some sort of notification upon sending a check? e.g. 'Check sent successfully'
 - Do we only want functional tests or unit/snapshot tests as well?
+- Should CheckTableRow.js be broken up?
