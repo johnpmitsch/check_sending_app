@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import CheckTableCell from './CheckTableCell';
 import ActionButton from './ActionButton';
 
@@ -34,7 +35,13 @@ function CheckTableRow({
                 setEditing(false);
               }}
             />
-            <ActionButton title={'Cancel'} action={() => setEditing(false)} />
+            <ActionButton
+              title={'Cancel'}
+              action={() => {
+                setNewAddress(address);
+                setEditing(false);
+              }}
+            />
           </>
         ) : (
           <ActionButton title={'Edit'} action={() => setEditing(true)} />
@@ -49,5 +56,15 @@ function CheckTableRow({
     </tr>
   );
 }
+
+CheckTableRow.propTypes = {
+  info: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    address: PropTypes.string,
+    amount: PropTypes.number,
+  }).isRequired,
+  updateNonprofit: PropTypes.func.isRequired,
+};
 
 export default CheckTableRow;
