@@ -9,6 +9,7 @@ function CheckTableRow({
 }) {
   const [editing, setEditing] = useState(false);
   const [newAddress, setNewAddress] = useState(address);
+  const dollarAmount = `$${amount.toFixed(2)}`;
 
   return (
     <tr>
@@ -24,8 +25,8 @@ function CheckTableRow({
           address
         )}
       </CheckTableCell>
-      <CheckTableCell>{`$${amount.toFixed(2)}`}</CheckTableCell>
-      <CheckTableCell>
+      <CheckTableCell>{dollarAmount}</CheckTableCell>
+      <CheckTableCell small={true}>
         {editing ? (
           <>
             <ActionButton
@@ -47,10 +48,14 @@ function CheckTableRow({
           <ActionButton title={'Edit'} action={() => setEditing(true)} />
         )}
       </CheckTableCell>
-      <CheckTableCell>
+      <CheckTableCell small={true}>
         <ActionButton
           title={'Send'}
-          action={() => updateNonprofit(id, 'amount', 0)}
+          action={() => {
+            const msg = `Would you like to send a check to ${name} for ${dollarAmount}?`;
+            const confirmed = confirm(msg);
+            if (confirmed) updateNonprofit(id, 'amount', 0);
+          }}
         />
       </CheckTableCell>
     </tr>

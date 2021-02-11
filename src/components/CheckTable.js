@@ -7,7 +7,7 @@ function CheckTable() {
   const [currentNonprofits, setCurrentNonprofits] = useState([]);
 
   useEffect(() => {
-    // Set nonprofits to the fixed list that we will use and manipulate from state
+    // Set nonprofits to the fixed list on first load, then we can use and manipulate from state
     // This would be where an API call would happen
     setCurrentNonprofits(nonprofits);
   }, []);

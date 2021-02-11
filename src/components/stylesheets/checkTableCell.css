@@ -1,0 +1,11 @@
+td {
+  padding: 10px;
+}
+
+.table-cell {
+  min-width: 200px;
+}
+
+.small-table-cell {
+  min-width: 100px;
+}
