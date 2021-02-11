@@ -10,6 +10,13 @@ function CheckTableRow({
 }) {
   const [editing, setEditing] = useState(false);
   const [newAddress, setNewAddress] = useState(address);
+  const confirmAndSend = () => {
+    const msg = `Would you like to send a check to ${name} for ${toDollars(
+      amount
+    )}?`;
+    const confirmed = confirm(msg);
+    if (confirmed) updateNonprofit(id, 'amount', 0);
+  };
 
   return (
     <tr>
@@ -59,13 +66,7 @@ function CheckTableRow({
         <ActionButton
           title={'Send'}
           label={`send ${name}`}
-          action={() => {
-            const msg = `Would you like to send a check to ${name} for ${toDollars(
-              amount
-            )}?`;
-            const confirmed = confirm(msg);
-            if (confirmed) updateNonprofit(id, 'amount', 0);
-          }}
+          action={confirmAndSend}
         />
       </CheckTableCell>
     </tr>
