@@ -1,5 +1,5 @@
-function ActionButton({ title, onClick }) {
-  return <button onClick={() => alert(title)}>{title}</button>;
+function ActionButton({ title, action }) {
+  return <button onClick={action}>{title}</button>;
 }
 
 export default ActionButton;

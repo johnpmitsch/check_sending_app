@@ -4,23 +4,38 @@ import CheckTableRow from './CheckTableRow';
 import nonprofits from '../data/nonprofits';
 
 function CheckTable() {
-  const initalizeState = () =>
-    window.localStorage.getItem('nonprofits') || nonprofits;
-  const [currentNonprofits, setCurrentNonprofits] = useState(initalizeState());
+  const [currentNonprofits, setCurrentNonprofits] = useState([]);
 
   useEffect(() => {
-    window.localStorage.setItem('nonprofits', nonprofits);
-  }, [currentNonprofits]);
+    // Set nonprofits to the fixed list that we will use and manipulate from state
+    // This would be where an API call would happen
+    setCurrentNonprofits(nonprofits);
+  }, []);
+
+  // Update an attribute in a nonprofit object and save back to state
+  const updateNonprofit = (updateId, attribute, newValue) => {
+    const updatedNonProfits = currentNonprofits.map((np) => {
+      const { id } = np;
+      return id === updateId ? { ...np, [attribute]: newValue } : np;
+    });
+    setCurrentNonprofits(updatedNonProfits);
+  };
 
   return (
     <table>
       <CheckTableHeader />
       <tbody>
-        {currentNonprofits.map(({ id, ...info }) => {
-          const { amount } = info;
-          // only show nonprofit if it's over zero
+        {currentNonprofits.map((info) => {
+          const { id, amount } = info;
           if (amount > 0) {
-            return <CheckTableRow key={id} info={info} />;
+            return (
+              <CheckTableRow
+                key={id}
+                info={info}
+                setCurrentNonprofits={setCurrentNonprofits}
+                updateNonprofit={updateNonprofit}
+              />
+            );
           }
         })}
       </tbody>
