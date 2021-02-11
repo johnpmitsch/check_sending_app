@@ -22,7 +22,7 @@ function CheckTable() {
   };
 
   return (
-    <table>
+    <table align="center">
       <CheckTableHeader />
       <tbody>
         {currentNonprofits.map((info) => {

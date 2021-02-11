@@ -2,6 +2,7 @@
   text-align: center;
 }
 
-table {
-  margin: 0px auto;
+td,
+th {
+  text-align: left;
 }

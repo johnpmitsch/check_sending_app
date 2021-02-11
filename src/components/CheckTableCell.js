@@ -3,7 +3,7 @@ import './stylesheets/checkTableCell.css';
 
 function CheckTableCell({ children, small }) {
   return (
-    <td className={small ? 'table-cell-small' : 'table-cell'}>{children}</td>
+    <td className={small ? 'small-table-cell' : 'table-cell'}>{children}</td>
   );
 }
 
